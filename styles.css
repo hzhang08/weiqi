@@ -84,6 +84,7 @@ body {
 }
 
 .about-link.desktop-only {
+    display: inline-block;
     background: none;
     border: none;
     color: var(--text-color);
@@ -92,6 +93,7 @@ body {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.2s ease;
+    text-decoration: none;
 }
 
 .about-link.desktop-only:hover {
@@ -307,6 +309,10 @@ button.contact-button:hover {
     color: var(--accent-color);
 }
 
+.menu-item.about-link {
+    text-decoration: none;
+}
+
 .menu-item-icon {
     font-size: 18px;
     opacity: 0.7;
@@ -423,6 +429,10 @@ button.contact-button:hover {
         color: var(--accent-color);
     }
 
+    .menu-item.about-link {
+        text-decoration: none;
+    }
+
     .menu-item-icon {
         font-size: 18px;
         opacity: 0.7;
@@ -474,6 +484,190 @@ button.contact-button:hover {
 
     .star {
         font-size: 22px;
+    }
+}
+
+/* About Page Styles */
+.about-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-content {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.about-content h1 {
+    color: var(--text-color);
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.about-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-text p:first-child {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .about-page {
+        padding: 20px;
+    }
+
+    .about-content {
+        padding: 30px 20px;
+    }
+
+    .about-content h1 {
+        font-size: 24px;
+    }
+
+    .about-text {
+        font-size: 16px;
+    }
+
+    .about-text p:first-child {
+        font-size: 20px;
+    }
+}
+
+/* Student Portal Styles */
+.portal-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.login-container {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-container h2 {
+    color: var(--text-color);
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: var(--accent-color);
+}
+
+.eye-icon {
+    line-height: 1;
+    transition: opacity 0.2s ease;
+}
+
+.login-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .portal-page {
+        padding: 20px;
+    }
+
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+    }
+
+    .form-group input,
+    .login-button {
+        padding: 10px;
+        font-size: 15px;
     }
 }
 
@@ -539,4 +733,48 @@ button.contact-button:hover {
 
 .nav-links .about-text:hover {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Back to Home Button */
+.back-home-container {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.back-home-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-arrow {
+    font-size: 20px;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .back-home-container {
+        margin-top: 30px;
+        padding-top: 15px;
+    }
+
+    .back-home-button {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
 }

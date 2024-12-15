@@ -1,20 +1,11 @@
 let isSimplified = false;
 
-// Scroll to About section
-function scrollToAbout() {
-    const aboutSection = document.querySelector('.about-section');
-    if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
 // Initialize mobile menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const moreButton = document.querySelector('.more-button');
     const mobileMenu = document.querySelector('.mobile-menu');
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
     const closeMenuButton = document.querySelector('.close-menu');
-    const aboutLink = document.querySelector('.about-link');
     
     // Toggle mobile menu
     function showMobileMenu() {
@@ -36,12 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     closeMenuButton.addEventListener('click', hideMobileMenu);
     mobileMenuOverlay.addEventListener('click', hideMobileMenu);
-    
-    // Handle About link click
-    aboutLink.addEventListener('click', function() {
-        hideMobileMenu();
-        scrollToAbout();
-    });
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {

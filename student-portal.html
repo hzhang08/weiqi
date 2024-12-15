@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生中心 - 傳奇圍棋道場</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="圍棋道場標誌" class="logo">
+            <h1>傳奇圍棋道場</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">繁</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>關於</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">學生中心</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+            <div class="mobile-menu">
+                <div class="menu-header">
+                    <span>選項</span>
+                    <button class="close-menu">✕</button>
+                </div>
+                <button class="menu-item lang-switch" onclick="switchLanguage()">
+                    <span>語言</span>
+                    <span id="mobileLangText">繁</span>
+                </button>
+                <a href="about.html" class="menu-item about-link">
+                    <span>關於</span>
+                    <span class="menu-item-icon">ⓘ</span>
+                </a>
+                <a href="student-portal.html" class="menu-item student-portal">
+                    <span>學生中心</span>
+                    <span class="menu-item-icon">→</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="portal-page">
+        <div class="login-container">
+            <h2>學生登入</h2>
+            <form class="login-form" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">用戶名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密碼</label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <span class="eye-icon">👁</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="login-button">登入</button>
+            </form>
+            <div class="back-home-container">
+                <a href="index.html" class="back-home-button">
+                    <span class="back-arrow">←</span>
+                    <span>返回主頁</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.querySelector('.eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.style.opacity = '0.7';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.style.opacity = '1';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Add your login logic here
+            console.log('Login attempt:', { username, password });
+            
+            // For now, just show an alert
+            alert('登入功能正在開發中');
+            return false;
+        }
+    </script>
+</body>
+</html>
