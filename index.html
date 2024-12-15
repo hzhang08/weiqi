@@ -16,13 +16,37 @@
             <img src="img/weiqiicon.svg" alt="圍棋道場標誌" class="logo">
             <h1>傳奇圍棋道場</h1>
         </div>
-        <nav class="top-nav">
-            <div class="nav-links">
-                <button onclick="switchLanguage()" class="lang-switch-button">
-                    <span id="langText">繁</span> | <span>简</span>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">繁</span>
+            </button>
+            <button class="about-link desktop-only" onclick="scrollToAbout()">
+                <span>關於</span>
+            </button>
+            <a href="https://student.legendgo.com" target="_blank" class="student-portal desktop-only">學生中心</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span>•••</span>
                 </button>
-                <span class="about-text">關於</span>
-                <a href="https://student.legendgo.com" target="_blank">學生中心</a>
+                <div class="mobile-menu-overlay"></div>
+                <div class="mobile-menu">
+                    <div class="menu-header">
+                        <span>選項</span>
+                        <button class="close-menu">✕</button>
+                    </div>
+                    <button class="menu-item lang-switch" onclick="switchLanguage()">
+                        <span>語言</span>
+                        <span id="mobileLangText">繁</span>
+                    </button>
+                    <button class="menu-item about-link">
+                        <span>關於</span>
+                        <span class="menu-item-icon">ⓘ</span>
+                    </button>
+                    <a href="https://student.legendgo.com" target="_blank" class="menu-item student-portal">
+                        <span>學生中心</span>
+                        <span class="menu-item-icon">→</span>
+                    </a>
+                </div>
             </div>
         </nav>
     </header>
