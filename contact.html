@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯繫我們 - 傳奇圍棋道場</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="圍棋道場標誌" class="logo">
+            <h1>傳奇圍棋道場</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">繁</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>關於</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">學生中心</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+            <div class="mobile-menu">
+                <div class="menu-header">
+                    <span>選項</span>
+                    <button class="close-menu">✕</button>
+                </div>
+                <button class="menu-item lang-switch" onclick="switchLanguage()">
+                    <span>語言</span>
+                    <span id="mobileLangText">繁</span>
+                </button>
+                <a href="about.html" class="menu-item about-link">
+                    <span>關於</span>
+                    <span class="menu-item-icon">ⓘ</span>
+                </a>
+                <a href="student-portal.html" class="menu-item student-portal">
+                    <span>學生中心</span>
+                    <span class="menu-item-icon">→</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contact-page">
+        <div class="contact-container">
+            <h2>聯繫我們</h2>
+            
+            <div class="contact-intro">
+                <p>請提供以下資料，我們會盡快與您聯繫：</p>
+            </div>
+
+            <form class="contact-form" id="contactForm" onsubmit="return handleSubmit(event)">
+                <div class="form-group">
+                    <label for="phone">電話號碼</label>
+                    <input type="tel" id="phone" name="phone" 
+                           placeholder="例如：+1 234-567-8900" 
+                           title="請輸入有效的電話號碼，例如：+1 234-567-8900"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="email">電子郵件</label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="例如：your.name@example.com"
+                           title="請輸入有效的電子郵件地址"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="wechat">微信號碼</label>
+                    <input type="text" id="wechat" name="wechat" placeholder="您的微信ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">留言</label>
+                    <textarea id="message" name="message" rows="4" placeholder="請輸入您的留言..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <span class="button-text">提交</span>
+                    <span class="button-icon">→</span>
+                </button>
+            </form>
+
+            <div class="alternative-contact">
+                <p>或者通過其他方式聯繫我們：</p>
+                <a href="https://linktr.ee/legendgo" target="_blank" class="linktree-link">
+                    <img src="img/linktree.svg" alt="Linktree" class="linktree-icon">
+                    <span>更多聯繫方式</span>
+                </a>
+            </div>
+
+            <div class="back-home-container">
+                <a href="index.html" class="back-home-button">
+                    <span class="back-arrow">←</span>
+                    <span>返回主頁</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function validatePhone(phone) {
+            // Allow international format: +1 234-567-8900 or local format: 234-567-8900
+            const phoneRegex = /^(\+\d{1,3}\s?)?\d{3}[-.]?\d{3}[-.]?\d{4}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function validateEmail(email) {
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const wechat = document.getElementById('wechat').value;
+            const message = document.getElementById('message').value;
+
+            // Validate phone format
+            if (!validatePhone(phone)) {
+                alert('請輸入有效的電話號碼。例如：+1 234-567-8900');
+                return false;
+            }
+
+            // Validate email format
+            if (!validateEmail(email)) {
+                alert('請輸入有效的電子郵件地址');
+                return false;
+            }
+
+            const formData = {
+                phone: phone,
+                email: email,
+                wechat: wechat,
+                message: message
+            };
+
+            console.log('Form submitted:', formData);
+            alert('感謝您的留言，我們會盡快與您聯繫！');
+            event.target.reset();
+            return false;
+        }
+    </script>
+</body>
+</html>
