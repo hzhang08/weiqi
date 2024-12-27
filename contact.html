@@ -6,6 +6,21 @@
     <title>聯繫我們 - 傳奇圍棋道場</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
@@ -63,23 +78,23 @@
                     <label for="phone">電話號碼</label>
                     <input type="tel" id="phone" name="phone" 
                            placeholder="例如：+1 234-567-8900" 
-                           title="請輸入有效的電話號碼，例如：+1 234-567-8900"
-                           required>
+                           title="請輸入有效的電話號碼，例如：+1 234-567-8900">
                 </div>
                 <div class="form-group">
                     <label for="email">電子郵件</label>
                     <input type="email" id="email" name="email" 
                            placeholder="例如：your.name@example.com"
-                           title="請輸入有效的電子郵件地址"
-                           required>
+                           title="請輸入有效的電子郵件地址">
                 </div>
                 <div class="form-group">
                     <label for="wechat">微信號碼</label>
-                    <input type="text" id="wechat" name="wechat" placeholder="您的微信ID" required>
+                    <input type="text" id="wechat" name="wechat" 
+                           placeholder="您的微信ID">
                 </div>
                 <div class="form-group">
                     <label for="message">留言</label>
-                    <textarea id="message" name="message" rows="4" placeholder="請輸入您的留言..." required></textarea>
+                    <textarea id="message" name="message" rows="4" 
+                            placeholder="請輸入您的留言..." required></textarea>
                 </div>
 
                 <button type="submit" class="submit-button">
@@ -107,49 +122,329 @@
 
     <script src="script.js"></script>
     <script>
-        function validatePhone(phone) {
-            // Allow international format: +1 234-567-8900 or local format: 234-567-8900
-            const phoneRegex = /^(\+\d{1,3}\s?)?\d{3}[-.]?\d{3}[-.]?\d{4}$/;
-            return phoneRegex.test(phone);
+        // UUID generation function
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
         }
 
-        function validateEmail(email) {
-            // Basic email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
+        // Language translations
+        const translations = {
+            traditional: {
+                phone: '電話號碼',
+                email: '電子郵件',
+                wechat: '微信號碼',
+                message: '留言',
+                submit: '提交',
+                confirmSubmit: '確認提交',
+                cancel: '取消',
+                confirmTitle: '請確認以下信息：',
+                notFilled: '未填寫',
+                successMessage: '提交成功，我們會盡早聯繫您',
+                errorMessage: '提交失敗，請重新提交',
+                statusCode: '狀態碼',
+                response: '響應',
+                error: '錯誤'
+            },
+            simplified: {
+                phone: '电话号码',
+                email: '电子邮件',
+                wechat: '微信号码',
+                message: '留言',
+                submit: '提交',
+                confirmSubmit: '确认提交',
+                cancel: '取消',
+                confirmTitle: '请确认以下信息：',
+                notFilled: '未填写',
+                successMessage: '提交成功，我们会尽早联系您',
+                errorMessage: '提交失败，请重新提交',
+                statusCode: '状态码',
+                response: '响应',
+                error: '错误'
+            }
+        };
+
+        function getCurrentTranslation() {
+            return isSimplified ? translations.simplified : translations.traditional;
         }
 
-        function handleSubmit(event) {
-            event.preventDefault();
+        // Update form labels based on current language
+        function updateFormLabels() {
+            const t = getCurrentTranslation();
+            document.querySelector('label[for="phone"]').textContent = t.phone;
+            document.querySelector('label[for="email"]').textContent = t.email;
+            document.querySelector('label[for="wechat"]').textContent = t.wechat;
+            document.querySelector('label[for="message"]').textContent = t.message;
+            document.querySelector('.button-text').textContent = t.submit;
+        }
+
+        // Add language switch listener
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFormLabels();
+            // Override switchLanguage to also update our dynamic content
+            const originalSwitchLanguage = window.switchLanguage;
+            window.switchLanguage = function() {
+                originalSwitchLanguage();
+                updateFormLabels();
+            };
+        });
+
+        // Show popup message
+        function showPopup(message) {
+            const t = getCurrentTranslation();
+            // Convert error message to current language if it's one of our standard messages
+            if (message === translations.traditional.successMessage) {
+                message = t.successMessage;
+            } else if (message.includes(translations.traditional.errorMessage)) {
+                message = message.replace(
+                    translations.traditional.errorMessage,
+                    t.errorMessage
+                ).replace(
+                    translations.traditional.statusCode,
+                    t.statusCode
+                ).replace(
+                    translations.traditional.response,
+                    t.response
+                ).replace(
+                    translations.traditional.error,
+                    t.error
+                );
+            }
+
+            const popup = document.createElement('div');
+            popup.style.position = 'fixed';
+            popup.style.top = '50%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.padding = '30px 40px';
+            popup.style.backgroundColor = '#4CAF50';
+            popup.style.color = 'white';
+            popup.style.border = 'none';
+            popup.style.borderRadius = '8px';
+            popup.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+            popup.style.zIndex = '1000';
+            popup.style.fontSize = '18px';
+            popup.style.fontWeight = 'bold';
+            popup.style.minWidth = '300px';
+            popup.style.textAlign = 'center';
             
+            const isSuccess = message === t.successMessage;
+            
+            if (message.includes(t.errorMessage)) {
+                popup.style.backgroundColor = '#f44336';
+            }
+
+            // Create content container
+            const contentContainer = document.createElement('div');
+            contentContainer.style.marginBottom = isSuccess ? '20px' : '0';
+            contentContainer.textContent = message;
+            popup.appendChild(contentContainer);
+
+            // Add close button only for success message
+            if (isSuccess) {
+                const closeButton = document.createElement('button');
+                closeButton.textContent = '关闭';  // We can add this to translations if needed
+                closeButton.style.padding = '8px 20px';
+                closeButton.style.backgroundColor = 'white';
+                closeButton.style.color = '#4CAF50';
+                closeButton.style.border = 'none';
+                closeButton.style.borderRadius = '4px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.style.fontSize = '16px';
+                closeButton.style.fontWeight = 'bold';
+                closeButton.style.marginTop = '10px';
+                closeButton.style.transition = 'background-color 0.2s';
+
+                closeButton.onmouseover = () => {
+                    closeButton.style.backgroundColor = '#f0f0f0';
+                };
+                closeButton.onmouseout = () => {
+                    closeButton.style.backgroundColor = 'white';
+                };
+
+                closeButton.onclick = () => {
+                    popup.style.transition = 'opacity 0.3s ease-out';
+                    popup.style.opacity = '0';
+                    setTimeout(() => popup.remove(), 300);
+                };
+
+                popup.appendChild(closeButton);
+            } else {
+                // For error messages, keep the auto-dismiss behavior
+                setTimeout(() => {
+                    popup.style.transition = 'opacity 0.5s ease-out';
+                    popup.style.opacity = '0';
+                }, 2500);
+
+                setTimeout(() => {
+                    popup.remove();
+                }, 3000);
+            }
+
+            document.body.appendChild(popup);
+        }
+
+        // Show confirm dialog
+        function showConfirmDialog(message) {
+            const t = getCurrentTranslation();
+            const dialog = document.createElement('div');
+            dialog.style.position = 'fixed';
+            dialog.style.top = '50%';
+            dialog.style.left = '50%';
+            dialog.style.transform = 'translate(-50%, -50%)';
+            dialog.style.padding = '30px 40px';
+            dialog.style.backgroundColor = 'white';
+            dialog.style.border = 'none';
+            dialog.style.borderRadius = '8px';
+            dialog.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+            dialog.style.zIndex = '1000';
+            dialog.style.minWidth = '300px';
+            dialog.style.textAlign = 'left';
+            dialog.style.fontSize = '16px';
+
+            const content = document.createElement('div');
+            content.style.marginBottom = '20px';
+            content.style.whiteSpace = 'pre-line';
+            content.textContent = message;
+            dialog.appendChild(content);
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.justifyContent = 'center';
+            buttonContainer.style.gap = '10px';
+
+            const confirmButton = document.createElement('button');
+            confirmButton.textContent = t.confirmSubmit;
+            confirmButton.style.padding = '10px 20px';
+            confirmButton.style.backgroundColor = '#4CAF50';
+            confirmButton.style.color = 'white';
+            confirmButton.style.border = 'none';
+            confirmButton.style.borderRadius = '4px';
+            confirmButton.style.cursor = 'pointer';
+            confirmButton.style.minWidth = '100px';
+            confirmButton.style.display = 'flex';
+            confirmButton.style.alignItems = 'center';
+            confirmButton.style.justifyContent = 'center';
+
+            const cancelButton = document.createElement('button');
+            cancelButton.textContent = t.cancel;
+            cancelButton.style.padding = '10px 20px';
+            cancelButton.style.backgroundColor = '#f44336';
+            cancelButton.style.color = 'white';
+            cancelButton.style.border = 'none';
+            cancelButton.style.borderRadius = '4px';
+            cancelButton.style.cursor = 'pointer';
+            cancelButton.style.minWidth = '100px';
+
+            buttonContainer.appendChild(confirmButton);
+            buttonContainer.appendChild(cancelButton);
+            dialog.appendChild(buttonContainer);
+
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '999';
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(dialog);
+
+            return new Promise((resolve) => {
+                confirmButton.onclick = () => {
+                    // Replace button text with spinner
+                    confirmButton.innerHTML = '<div class="loading-spinner"></div>';
+                    confirmButton.style.cursor = 'default';
+                    confirmButton.disabled = true;
+                    cancelButton.style.display = 'none';
+                    resolve({ confirmed: true, dialog, overlay });
+                };
+                cancelButton.onclick = () => {
+                    overlay.remove();
+                    dialog.remove();
+                    resolve({ confirmed: false });
+                };
+            });
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
             const wechat = document.getElementById('wechat').value;
             const message = document.getElementById('message').value;
+            const t = getCurrentTranslation();
 
-            // Validate phone format
-            if (!validatePhone(phone)) {
-                alert('請輸入有效的電話號碼。例如：+1 234-567-8900');
-                return false;
+            const summary = `${t.confirmTitle}\n\n` +
+                          `${t.phone}：${phone || t.notFilled}\n` +
+                          `${t.email}：${email || t.notFilled}\n` +
+                          `${t.wechat}：${wechat || t.notFilled}\n` +
+                          `${t.message}：${message}`;
+
+            const { confirmed, dialog, overlay } = await showConfirmDialog(summary);
+            
+            if (!confirmed) {
+                return;
             }
 
-            // Validate email format
-            if (!validateEmail(email)) {
-                alert('請輸入有效的電子郵件地址');
-                return false;
-            }
-
-            const formData = {
-                phone: phone,
-                email: email,
-                wechat: wechat,
-                message: message
+            const id = generateUUID();
+            const data = {
+                records: [
+                    {
+                        fields: {
+                            Id: id,
+                            Date: new Date().toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: false,
+                                timeZone: 'America/Los_Angeles'
+                            }),
+                            Phone: phone,
+                            Email: email,
+                            WeChat: wechat,
+                            Message: message
+                        }
+                    }
+                ]
             };
 
-            console.log('Form submitted:', formData);
-            alert('感謝您的留言，我們會盡快與您聯繫！');
-            event.target.reset();
-            return false;
+            try {
+                const response = await fetch('https://api.airtable.com/v0/appyOURtbQShdSe2m/Feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer pathZXNS0aBIZSziA.1f6b1061a5162b3f1d1f92c4e3942a090283f83dbe2b1e6f5b615f327dc95d63',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Remove dialog and overlay after response
+                dialog.remove();
+                overlay.remove();
+
+                if (response.status === 200) {
+                    showPopup(t.successMessage);
+                    document.getElementById('contactForm').reset();
+                } else {
+                    const responseBody = await response.text();
+                    showPopup(`${t.errorMessage}\n${t.statusCode}: ${response.status}\n${t.response}: ${responseBody}`);
+                }
+            } catch (error) {
+                // Remove dialog and overlay in case of error
+                dialog.remove();
+                overlay.remove();
+                showPopup(`${t.errorMessage}\n${t.error}: ${error.message}`);
+            }
         }
     </script>
 </body>
