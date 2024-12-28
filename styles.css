@@ -19,6 +19,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: var(--header-height);
 }
 
 /* Header Styles */
@@ -33,8 +34,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: none;
-    position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
 .logo-container {
@@ -101,28 +101,35 @@ body {
 }
 
 /* Hero Section Styles */
+.main-content-wrapper {
+    position: relative;
+    min-height: calc(100vh - var(--header-height));
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+}
+
 .hero-section {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 80px 20px 20px;
     position: relative;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
-    z-index: 1;
+    padding: 40px 20px;
 }
 
 .hero-content {
-    flex: 1;
     text-align: center;
     display: flex;
     flex-direction: column;
     gap: 40px;
     max-width: 800px;
-    margin: 0 auto;
+    width: 100%;
     position: relative;
-    padding-top: 0;
 }
 
 .hero-content h1 {
@@ -138,7 +145,15 @@ body {
     font-size: 48px;
     color: #666;
     font-weight: normal;
-    margin-bottom: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-content .subtext {
+    font-size: 24px;
+    line-height: 1.5;
+    color: #666;
+    margin: 0;
 }
 
 .cta-button {
@@ -160,22 +175,21 @@ body {
     max-height: 150px;
     width: auto;
     position: absolute;
-    left: -100px;
-    bottom: 150px;
-    transform: rotate(-10deg);
+    left: 0;
+    bottom: 50%;
+    transform: translateX(-100px) rotate(-10deg);
 }
 
 .trophy-container {
     position: absolute;
-    right: -180px;
+    right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateX(180px) translateY(-50%) rotate(15deg);
 }
 
 .trophy {
     max-height: 150px;
     width: auto;
-    transform: rotate(15deg);
 }
 
 a.contact-button {
@@ -199,23 +213,90 @@ a.contact-button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.ai-badge {
-    position: absolute;
-    right: 90px;
-    top: 260px;
-    transform: rotate(8deg);
-    color: #666;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 2;
-    padding: 10px;
-}
-
 .star {
     color: #FFD700;
     font-size: 26px;
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        gap: 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 64px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content h2 {
+        font-size: 36px;
+    }
+
+    .hero-content .subtext {
+        font-size: 20px;
+    }
+
+    .kid-image, .trophy-container {
+        display: none;
+    }
+
+    .star {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        gap: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content h2 {
+        font-size: 28px;
+    }
+
+    .hero-content .subtext {
+        font-size: 16px;
+    }
+    
+    .star {
+        font-size: 20px;
+    }
+}
+
+/* iPhone SE specific styles */
+@media (max-width: 375px) {
+    body {
+        padding-top: calc(var(--header-height) + 10px);
+    }
+
+    .main-content-wrapper {
+        gap: 10px;
+    }
+
+    .hero-section {
+        padding: 0 10px;
+    }
+
+    .hero-content {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .hero-content h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        padding-top: 5px;
+    }
+
+    .hero-content .subtext {
+        font-size: 14px;
+        line-height: 1.4;
+    }
 }
 
 /* Mobile Navigation */
@@ -478,16 +559,9 @@ a.contact-button:hover {
         display: none;
     }
 
-    .ai-badge {
-        right: 20px;
-        top: 180px;
-        font-size: 20px;
-    }
-
     .star {
         font-size: 22px;
     }
-
 }
 
 /* About Page Styles */

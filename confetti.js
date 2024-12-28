@@ -4,8 +4,8 @@ class Confetti {
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.colors = ['#FFD700', '#FF6B4A', '#4A90E2', '#50E3C2', '#FF8A65'];
-        this.badge = null;
-        this.badgeRect = null;
+        this.heroSection = null;
+        this.heroContent = null;
         
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.init());
@@ -15,19 +15,23 @@ class Confetti {
     }
 
     init() {
-        this.badge = document.querySelector('.ai-badge');
-        if (!this.badge) {
-            console.error('AI badge not found');
+        this.heroSection = document.querySelector('.hero-section');
+        this.heroContent = document.querySelector('.hero-content');
+        if (!this.heroSection || !this.heroContent) {
+            console.error('Required elements not found');
             return;
         }
 
         // Set up the canvas
         this.canvas.style.position = 'absolute';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.zIndex = '1';
         
-        // Insert canvas into the same parent as the badge
-        this.badge.parentElement.appendChild(this.canvas);
+        // Insert canvas as first child of hero section
+        this.heroSection.insertBefore(this.canvas, this.heroSection.firstChild);
         
         // Set up event listeners
         window.addEventListener('resize', () => this.resizeCanvas());
@@ -37,19 +41,11 @@ class Confetti {
     }
 
     resizeCanvas() {
-        if (!this.badge) return;
+        if (!this.heroSection) return;
         
-        const padding = 20;
-        const extraHeight = 100; // Extra height for higher burst
-        const computedStyle = window.getComputedStyle(this.badge);
-        const top = parseInt(computedStyle.top);
-        const right = parseInt(computedStyle.right);
-        
-        // Position canvas to match badge position, but taller
-        this.canvas.style.top = (top - padding - extraHeight) + 'px';
-        this.canvas.style.right = (right - padding) + 'px';
-        this.canvas.width = this.badge.offsetWidth + (padding * 2);
-        this.canvas.height = this.badge.offsetHeight + (padding * 2) + extraHeight;
+        // Match canvas size to hero section
+        this.canvas.width = this.heroSection.offsetWidth;
+        this.canvas.height = this.heroSection.offsetHeight;
     }
 
     createParticles() {
@@ -60,40 +56,47 @@ class Confetti {
     }
 
     createParticle() {
-        // Calculate burst origin point at bottom center
+        if (!this.heroContent) return null;
+
+        // Get the position of hero content
+        const heroRect = this.heroContent.getBoundingClientRect();
+        const canvasRect = this.canvas.getBoundingClientRect();
+        
+        // Calculate burst origin point above the hero content
         const originX = this.canvas.width / 2;
-        const originY = this.canvas.height - 15;
+        const originY = (heroRect.top - canvasRect.top) - 20;
 
         // Create a more circular burst pattern
-        const angle = (Math.random() * 80 - 40) * Math.PI / 180;
-        const speed = Math.random() * 0.8 + 2.2; // Increased base speed for higher burst
+        const angle = (Math.random() * 360) * Math.PI / 180;
+        const speed = Math.random() * 0.8 + 0.6;
 
         return {
             x: originX,
             y: originY,
             size: Math.random() * 4 + 2,
             color: this.colors[Math.floor(Math.random() * this.colors.length)],
-            speedX: Math.sin(angle) * speed,
-            speedY: -Math.cos(angle) * speed,
-            gravity: 0.025, // Reduced gravity to allow higher rise
+            speedX: Math.cos(angle) * speed,
+            speedY: Math.sin(angle) * speed,
+            gravity: 0.02,
             rotation: Math.random() * 360,
-            rotationSpeed: (Math.random() - 0.5) * 4,
+            rotationSpeed: (Math.random() - 0.5) * 2,
             opacity: 1,
-            fadeSpeed: Math.random() * 0.005 + 0.005
+            fadeSpeed: Math.random() * 0.002 + 0.002
         };
     }
 
     animate() {
-        if (!this.badge || !this.ctx) return;
+        if (!this.heroSection || !this.ctx) return;
         
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         for (let i = this.particles.length - 1; i >= 0; i--) {
             const p = this.particles[i];
+            if (!p) continue;
             
-            // Update position with slower movement
-            p.x += p.speedX * 0.5;
-            p.y += p.speedY * 0.5;
+            // Update position
+            p.x += p.speedX * 0.7;
+            p.y += p.speedY * 0.7;
             p.speedY += p.gravity;
             p.rotation += p.rotationSpeed;
             p.opacity -= p.fadeSpeed;
@@ -102,27 +105,15 @@ class Confetti {
             this.ctx.save();
             this.ctx.translate(p.x, p.y);
             this.ctx.rotate(p.rotation * Math.PI / 180);
-            this.ctx.globalAlpha = Math.max(0, p.opacity);
-            
-            // Draw a small star shape
-            this.ctx.beginPath();
             this.ctx.fillStyle = p.color;
-            for (let j = 0; j < 5; j++) {
-                const angle = (j * 72) * Math.PI / 180;
-                const x = Math.cos(angle) * p.size;
-                const y = Math.sin(angle) * p.size;
-                j === 0 ? this.ctx.moveTo(x, y) : this.ctx.lineTo(x, y);
-            }
-            this.ctx.closePath();
-            this.ctx.fill();
-            
+            this.ctx.globalAlpha = p.opacity;
+            this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
             this.ctx.restore();
 
-            // Reset particle if it's out of bounds or fully faded
-            if (p.y > this.canvas.height + 10 || p.y < -10 || 
-                p.x < -10 || p.x > this.canvas.width + 10 ||
-                p.opacity <= 0) {
-                this.particles[i] = this.createParticle();
+            // Remove faded particles and create new ones
+            if (p.opacity <= 0) {
+                this.particles.splice(i, 1);
+                this.particles.push(this.createParticle());
             }
         }
 
