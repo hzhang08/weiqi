@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y8QD7C1WY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Y8QD7C1WY');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程信息 - 傳奇圍棋道場</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        .course-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-header {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .course-details {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .course-details h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .course-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .course-info li {
+            margin: 15px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .course-info li:before {
+            content: "•";
+            color: #4A90E2;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4ff;
+            border-radius: 8px;
+        }
+
+        .contact-info p {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .teacher-link {
+            display: inline-block;
+            color: #4A90E2;
+            text-decoration: none;
+            padding: 2px 8px;
+            margin: 0 2px;
+            border-radius: 4px;
+            background: rgba(74, 144, 226, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .teacher-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4A90E2;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .teacher-link:hover {
+            color: #357ABD;
+            background: rgba(74, 144, 226, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+        }
+
+        .teacher-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .teacher-link:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .contact-images {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .qr-code-container {
+            text-align: center;
+        }
+
+        .qr-code-label {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .contact-images img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-images img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .course-section {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .course-header {
+                font-size: 1.8em;
+            }
+
+            .course-details h3 {
+                font-size: 1.3em;
+            }
+
+            .course-info li {
+                font-size: 1em;
+            }
+
+            .contact-images {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .contact-images img {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="圍棋道場標誌" class="logo">
+            <h1>傳奇圍棋道場</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">繁</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>關於</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">學生中心</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span>•••</span>
+                </button>
+                <div class="mobile-menu-overlay"></div>
+                <div class="mobile-menu">
+                    <div class="menu-header">
+                        <span>選項</span>
+                        <button class="close-menu">✕</button>
+                    </div>
+                    <button class="menu-item lang-switch" onclick="switchLanguage()">
+                        <span>語言</span>
+                        <span id="mobileLangText">繁</span>
+                    </button>
+                    <a href="about.html" class="menu-item about-link">
+                        <span>關於</span>
+                        <span class="menu-item-icon">ⓘ</span>
+                    </a>
+                    <a href="student-portal.html" class="menu-item student-portal">
+                        <span>學生中心</span>
+                        <span class="menu-item-icon">→</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="course-section">
+        <h2 class="course-header">2025 春季班招生</h2>
+        
+        <div class="course-details">
+            <h3>課程詳情</h3>
+            <ul class="course-info">
+                <li>小班教學，保證每位學生都能得到充分關注</li>
+                <li>時間：2月15日 - 4月19日</li>
+                <li>每週六下午 3:00 PM - 5:00 PM</li>
+                <li>地點：Livermore（具體地址將通過微信提供）</li>
+                <li>課程週期：共10週</li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <p>報名註冊請聯繫 <a href="about.html" class="teacher-link">Henry 老師</a></p>
+            <div class="contact-images">
+                <div class="qr-code-container">
+                    <div class="qr-code-label">微信 WeChat</div>
+                    <img src="img/henryWeChat.png" alt="Henry WeChat QR Code">
+                </div>
+                <div class="qr-code-container">
+                    <div class="qr-code-label">WhatsApp</div>
+                    <img src="img/henryWhatsApp.png" alt="Henry WhatsApp QR Code">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

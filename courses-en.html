@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y8QD7C1WY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Y8QD7C1WY');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Information - Legend Go Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        .course-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-header {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .course-details {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .course-details h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .course-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .course-info li {
+            margin: 15px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .course-info li:before {
+            content: "•";
+            color: #4A90E2;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4ff;
+            border-radius: 8px;
+        }
+
+        .contact-info p {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .teacher-link {
+            display: inline-block;
+            color: #4A90E2;
+            text-decoration: none;
+            padding: 2px 8px;
+            margin: 0 2px;
+            border-radius: 4px;
+            background: rgba(74, 144, 226, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .teacher-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4A90E2;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .teacher-link:hover {
+            color: #357ABD;
+            background: rgba(74, 144, 226, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+        }
+
+        .teacher-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .teacher-link:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .contact-images {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .qr-code-container {
+            text-align: center;
+        }
+
+        .qr-code-label {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .contact-images img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-images img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .course-section {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .course-header {
+                font-size: 1.8em;
+            }
+
+            .course-details h3 {
+                font-size: 1.3em;
+            }
+
+            .course-info li {
+                font-size: 1em;
+            }
+
+            .contact-images {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .contact-images img {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="Go Club Logo" class="logo">
+            <h1>Legend Go Club</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">简</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>About</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">Student Portal</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span>•••</span>
+                </button>
+                <div class="mobile-menu-overlay"></div>
+                <div class="mobile-menu">
+                    <div class="menu-header">
+                        <span>Options</span>
+                        <button class="close-menu">✕</button>
+                    </div>
+                    <button class="menu-item lang-switch" onclick="switchLanguage()">
+                        <span>Language</span>
+                        <span id="mobileLangText">简</span>
+                    </button>
+                    <a href="about.html" class="menu-item about-link">
+                        <span>About</span>
+                        <span class="menu-item-icon">ⓘ</span>
+                    </a>
+                    <a href="student-portal.html" class="menu-item student-portal">
+                        <span>Student Portal</span>
+                        <span class="menu-item-icon">→</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="course-section">
+        <h2 class="course-header">Spring 2025 Enrollment</h2>
+        
+        <div class="course-details">
+            <h3>Course Details</h3>
+            <ul class="course-info">
+                <li>Small group instruction ensuring individual attention for each student</li>
+                <li>Duration: February 15 - April 19</li>
+                <li>Schedule: Every Saturday 3:00 PM - 5:00 PM</li>
+                <li>Location: Livermore (Detailed address will be provided via WeChat)</li>
+                <li>Course Length: 10 weeks</li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <p>For registration, please contact <a href="about.html" class="teacher-link">Coach Henry</a></p>
+            <div class="contact-images">
+                <div class="qr-code-container">
+                    <div class="qr-code-label">WeChat</div>
+                    <img src="img/henryWeChat.png" alt="Henry WeChat QR Code">
+                </div>
+                <div class="qr-code-container">
+                    <div class="qr-code-label">WhatsApp</div>
+                    <img src="img/henryWhatsApp.png" alt="Henry WhatsApp QR Code">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
