@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y8QD7C1WY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Y8QD7C1WY');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Legend Go Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        .registration-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .registration-header {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .required-label::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-group input:hover {
+            border-color: #4A90E2;
+        }
+
+        .optional-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+
+        button[type="submit"] {
+            background-color: #4A90E2;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #357ABD;
+        }
+
+        .form-note {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input:invalid {
+            border-color: #e74c3c;
+        }
+
+        input:invalid + .error-message {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #4A90E2;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        .loading-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 80%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .popup-message {
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        .popup-button {
+            background: #4A90E2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .popup-button:hover {
+            background: #357ABD;
+        }
+
+        .confirm-dialog {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+            width: 400px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .confirm-message {
+            margin-bottom: 20px;
+            white-space: pre-line;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .confirm-button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            border: none;
+        }
+
+        .confirm-submit {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .confirm-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .confirm-submit:hover {
+            background: #357ABD;
+        }
+
+        .confirm-cancel:hover {
+            background: #cccccc;
+        }
+
+        @media (max-width: 768px) {
+            .registration-section {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .registration-header {
+                font-size: 1.8em;
+            }
+
+            .form-group label {
+                font-size: 1em;
+            }
+
+            .submit-button {
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="Go Club Logo" class="logo">
+            <h1>Legend Go Club</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">简</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>About</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">Student Portal</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span>•••</span>
+                </button>
+                <div class="mobile-menu-overlay"></div>
+                <div class="mobile-menu">
+                    <div class="menu-header">
+                        <span>Options</span>
+                        <button class="close-menu">✕</button>
+                    </div>
+                    <button class="menu-item lang-switch" onclick="switchLanguage()">
+                        <span>Language</span>
+                        <span id="mobileLangText">简</span>
+                    </button>
+                    <a href="about.html" class="menu-item about-link">
+                        <span>About</span>
+                        <span class="menu-item-icon">ⓘ</span>
+                    </a>
+                    <a href="student-portal.html" class="menu-item student-portal">
+                        <span>Student Portal</span>
+                        <span class="menu-item-icon">→</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="registration-section">
+        <h2 class="registration-header">Course Registration</h2>
+        
+        <div class="form-container">
+            <form id="registrationForm" onsubmit="return handleSubmit(event)">
+                <div class="form-group">
+                    <label for="studentName" class="required-label">Student Name</label>
+                    <input type="text" id="studentName" name="studentName" required>
+                    <div class="error-message">Please enter the student's name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentAge" class="required-label">Student Age</label>
+                    <input type="number" id="studentAge" name="studentAge" min="4" max="18" required>
+                    <div class="error-message">Please enter a valid age (4-18)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentGrade">
+                        Student Grade
+                        <span class="optional-text">(Optional)</span>
+                    </label>
+                    <input type="text" id="studentGrade" name="studentGrade">
+                </div>
+
+                <div class="form-group">
+                    <label for="parentName" class="required-label">Parent Name</label>
+                    <input type="text" id="parentName" name="parentName" required>
+                    <div class="error-message">Please enter parent's name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parentPhone">
+                        Parent Phone
+                        <span class="optional-text">(Optional)</span>
+                    </label>
+                    <input type="tel" id="parentPhone" name="parentPhone" 
+                           pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}"
+                           placeholder="123-456-7890">
+                </div>
+
+                <button type="submit">Submit Registration</button>
+            </form>
+
+            <p class="form-note">Required fields are marked with an asterisk (*)</p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // UUID generation function
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function showPopup(message) {
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'popup-message';
+            messageDiv.textContent = message;
+            
+            const button = document.createElement('button');
+            button.className = 'popup-button';
+            button.textContent = 'OK';
+            button.onclick = function() {
+                overlay.remove();
+                popup.remove();
+            };
+            
+            popup.appendChild(messageDiv);
+            popup.appendChild(button);
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+        }
+
+        function showConfirmDialog(message) {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'popup-overlay';
+                
+                const dialog = document.createElement('div');
+                dialog.className = 'confirm-dialog';
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'confirm-message';
+                messageDiv.textContent = message;
+                
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'confirm-buttons';
+                
+                const submitButton = document.createElement('button');
+                submitButton.className = 'confirm-button confirm-submit';
+                submitButton.textContent = 'Submit';
+                
+                const cancelButton = document.createElement('button');
+                cancelButton.className = 'confirm-button confirm-cancel';
+                cancelButton.textContent = 'Cancel';
+                
+                submitButton.onclick = function() {
+                    resolve({ confirmed: true, dialog, overlay });
+                };
+                
+                cancelButton.onclick = function() {
+                    dialog.remove();
+                    overlay.remove();
+                    resolve({ confirmed: false });
+                };
+                
+                buttonsDiv.appendChild(submitButton);
+                buttonsDiv.appendChild(cancelButton);
+                dialog.appendChild(messageDiv);
+                dialog.appendChild(buttonsDiv);
+                
+                document.body.appendChild(overlay);
+                document.body.appendChild(dialog);
+            });
+        }
+
+        function showLoadingPopup(message) {
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            
+            const spinner = document.createElement('div');
+            spinner.className = 'loading-spinner';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'loading-text';
+            messageDiv.textContent = message;
+            
+            popup.appendChild(spinner);
+            popup.appendChild(messageDiv);
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+
+            return { popup, overlay };
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            const studentName = document.getElementById('studentName').value;
+            const studentAge = document.getElementById('studentAge').value;
+            const studentGrade = document.getElementById('studentGrade').value;
+            const parentName = document.getElementById('parentName').value;
+            const parentPhone = document.getElementById('parentPhone').value;
+
+            const summary = `Please confirm the following information:\n\n` +
+                          `Student Name: ${studentName}\n` +
+                          `Student Age: ${studentAge}\n` +
+                          `Student Grade: ${studentGrade || 'Not provided'}\n` +
+                          `Parent Name: ${parentName}\n` +
+                          `Parent Phone: ${parentPhone || 'Not provided'}`;
+
+            const { confirmed, dialog, overlay } = await showConfirmDialog(summary);
+            
+            if (!confirmed) {
+                return;
+            }
+
+            // Show loading popup
+            const loadingPopup = showLoadingPopup('Submitting registration...');
+
+            const id = generateUUID();
+            const data = {
+                records: [
+                    {
+                        fields: {
+                            Id: id,
+                            StudentName: studentName,
+                            StudentAge: studentAge,
+                            StudentGrade: studentGrade,
+                            ParentName: parentName,
+                            ParentPhone: parentPhone
+                        }
+                    }
+                ]
+            };
+
+            try {
+                const response = await fetch('https://api.airtable.com/v0/appyOURtbQShdSe2m/Registration', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer pathZXNS0aBIZSziA.1f6b1061a5162b3f1d1f92c4e3942a090283f83dbe2b1e6f5b615f327dc95d63',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Remove loading popup
+                loadingPopup.popup.remove();
+                loadingPopup.overlay.remove();
+
+                // Remove confirm dialog
+                dialog.remove();
+                overlay.remove();
+
+                if (response.status === 200) {
+                    showPopup('Registration submitted successfully! Redirecting to instructions...');
+                    document.getElementById('registrationForm').reset();
+                    // Redirect after a short delay to show the success message
+                    setTimeout(() => {
+                        window.location.href = 'instruction-en.html';
+                    }, 2000);
+                } else {
+                    const responseBody = await response.text();
+                    showPopup(`Registration failed.\nStatus Code: ${response.status}\nResponse: ${responseBody}`);
+                }
+            } catch (error) {
+                // Remove loading popup
+                loadingPopup.popup.remove();
+                loadingPopup.overlay.remove();
+                
+                // Remove confirm dialog
+                dialog.remove();
+                overlay.remove();
+                showPopup(`Registration failed.\nError: ${error.message}`);
+            }
+        }
+
+        // Phone number formatting
+        document.getElementById('parentPhone').addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : !x[3] ? x[1] + '-' + x[2] : x[1] + '-' + x[2] + '-' + x[3];
+        });
+    </script>
+</body>
+</html>

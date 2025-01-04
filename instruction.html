@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y8QD7C1WY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Y8QD7C1WY');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程說明 - 傳奇圍棋學院</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        .instruction-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .instruction-header {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .instruction-content {
+            display: none; /* Hidden by default, shown after loading */
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .info-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .info-card p {
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4A90E2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .instruction-section {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .instruction-header {
+                font-size: 1.8em;
+            }
+
+            .info-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="img/weiqiicon.svg" alt="圍棋學院標誌" class="logo">
+            <h1>傳奇圍棋學院</h1>
+        </div>
+        <nav class="header-nav">
+            <button class="lang-switch desktop-only" onclick="switchLanguage()">
+                <span id="langText">En</span>
+            </button>
+            <a href="about.html" class="about-link desktop-only">
+                <span>關於我們</span>
+            </a>
+            <a href="student-portal.html" class="student-portal desktop-only">學生專區</a>
+            <div class="mobile-nav mobile-only">
+                <button class="more-button">
+                    <span>•••</span>
+                </button>
+                <div class="mobile-menu-overlay"></div>
+                <div class="mobile-menu">
+                    <div class="menu-header">
+                        <span>選項</span>
+                        <button class="close-menu">✕</button>
+                    </div>
+                    <button class="menu-item lang-switch" onclick="switchLanguage()">
+                        <span>語言</span>
+                        <span id="mobileLangText">En</span>
+                    </button>
+                    <a href="about.html" class="menu-item about-link">
+                        <span>關於我們</span>
+                        <span class="menu-item-icon">ⓘ</span>
+                    </a>
+                    <a href="student-portal.html" class="menu-item student-portal">
+                        <span>學生專區</span>
+                        <span class="menu-item-icon">→</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="instruction-section">
+        <h2 class="instruction-header">課程說明</h2>
+        
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">正在載入課程資訊...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            無法載入課程資訊。請稍後再試。
+        </div>
+
+        <div class="instruction-content" id="instructionContent">
+            <div class="info-card">
+                <h3>首堂課時間</h3>
+                <p id="firstClassTime">載入中...</p>
+            </div>
+
+            <div class="info-card">
+                <h3>上課地點</h3>
+                <p id="address">載入中...</p>
+            </div>
+
+            <div class="info-card">
+                <h3>付款資訊</h3>
+                <p id="payment">載入中...</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Venmo 帳號</h3>
+                <p id="venmo">載入中...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        async function fetchBasicInfo() {
+            try {
+                const response = await fetch('https://api.airtable.com/v0/appWAVccvwHVB4m3Q/Basic', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer pat8LB1ncSOwwbo2u.c5de6eaaa6bfd519757c66ee09814cb919eec8280339f58990dd0346833f6306'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.records && data.records.length > 0) {
+                    const firstRecord = data.records[0].fields;
+                    
+                    // Update the content
+                    document.getElementById('firstClassTime').textContent = firstRecord.FirstClassTime || '未指定';
+                    document.getElementById('address').textContent = firstRecord.Address || '未指定';
+                    document.getElementById('payment').textContent = firstRecord.Payment || '未指定';
+                    document.getElementById('venmo').textContent = firstRecord.Venmo || '未指定';
+
+                    // Hide loading, show content
+                    document.getElementById('loadingContainer').style.display = 'none';
+                    document.getElementById('instructionContent').style.display = 'block';
+                } else {
+                    throw new Error('未找到記錄');
+                }
+            } catch (error) {
+                console.error('獲取數據時出錯:', error);
+                document.getElementById('loadingContainer').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+
+        // Fetch data when page loads
+        document.addEventListener('DOMContentLoaded', fetchBasicInfo);
+    </script>
+</body>
+</html>
