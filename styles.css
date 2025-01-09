@@ -602,6 +602,54 @@ a.contact-button:hover {
     text-align: center;
 }
 
+/* About page bullet points */
+.bullet-points {
+    margin: 2rem 0;
+}
+
+.bullet-points h2 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.bullet-points ul {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.bullet-points li {
+    position: relative;
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.bullet-points li:before {
+    content: "•";
+    color: var(--accent-color);
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+}
+
+.about-text .motto {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    text-align: center;
+    margin: 1.5rem 0;
+    font-style: italic;
+}
+
+.about-text .note {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: rgba(255, 127, 80, 0.1);
+    border-radius: 4px;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .about-page {
         padding: 20px;
